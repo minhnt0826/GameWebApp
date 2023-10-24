@@ -1,7 +1,7 @@
 import React from "react";
 import useFetchData from "./useFetchData";
 
-type GameResponse = {
+type GameList = {
   count: number;
   results: Game[];
 };
@@ -15,7 +15,7 @@ export type Game = {
 };
 
 const useFetchGames = () => {
-  return useFetchData<GameResponse>("/games");
+  return useFetchData<GameList>("/games");
 };
 
 export default useFetchGames;

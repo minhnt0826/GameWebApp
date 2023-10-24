@@ -1,15 +1,17 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
 import React from "react";
 
 const Header = () => {
   return (
-    <HStack justifyContent={"space-between"}>
-      <Text fontSize={40} fontWeight={"bold"}>
-        GAME WOLRD
-      </Text>
+    <HStack justifyContent={"end"} pr={10} pt={10}>
       <HStack>
-        <Button> LOG IN </Button>
-        <Button> SIGN UP </Button>
+        <Button as={Link} to="/login">
+          LOG IN
+        </Button>
+        <Button as={Link} to="/signup">
+          SIGN UP
+        </Button>
       </HStack>
     </HStack>
   );
