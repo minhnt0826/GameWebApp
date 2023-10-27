@@ -3,6 +3,8 @@ import LoginPage from "../pages/LoginPage";
 import Home from "../pages/Home";
 import SignupPage from "../pages/SignupPage";
 import SingleGamePage from "../pages/SingleGamePage";
+import SinglePublisherPage from "../pages/SinglePublisherPage";
+import SingleDeveloperPage from "../pages/SingleDeveloperPage";
 
 const rootRoute = new RootRoute();
 
@@ -35,12 +37,26 @@ const singleGameRoute = new Route({
   component: SingleGamePage,
 });
 
+const singlePublisherRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/publishers/$id",
+  component: SinglePublisherPage,
+});
+
+const singleDeveloperRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/developers/$id",
+  component: SingleDeveloperPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   signupRoute,
   gamesRoute,
   singleGameRoute,
+  singlePublisherRoute,
+  singleDeveloperRoute,
 ]);
 
 declare module "@tanstack/react-router" {

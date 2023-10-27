@@ -8,6 +8,7 @@ interface AuthState {
   userId: number | null;
   login: UseMutationResult<null | undefined, unknown, LoginInfo, unknown>;
   register: UseMutationResult<null | undefined, unknown, LoginInfo, unknown>;
+  signout: () => void;
 }
 const AuthStateContext = React.createContext<AuthState>({} as AuthState);
 
@@ -68,6 +69,11 @@ export default function AuthStateContextProvider({ children }: Props) {
     }
   }
 
+  function signout() {
+    setUserId(null);
+    setisLoggedIn(false);
+  }
+
   return (
     <AuthStateContext.Provider
       value={{
@@ -75,6 +81,7 @@ export default function AuthStateContextProvider({ children }: Props) {
         userId: userId,
         login: loginMutation,
         register: registerMutation,
+        signout: signout,
       }}
     >
       {children}

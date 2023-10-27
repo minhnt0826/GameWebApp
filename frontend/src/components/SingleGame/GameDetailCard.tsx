@@ -9,6 +9,7 @@ import {
   HStack,
   Heading,
   Image,
+  Link,
   Text,
   VStack,
   useDisclosure,
@@ -16,6 +17,7 @@ import {
 import RatingBar from "./RatingBar";
 import { useAuthState } from "../../contexts/Authentication";
 import NotLoggedInDialog from "../NotLoggedInDialog";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
   gameDetail: GameDetail;
@@ -26,10 +28,19 @@ const GameDetailCard = ({ gameDetail }: Props) => {
 
   const useDisclosureReturn = useDisclosure();
 
+  const navigate = useNavigate();
+
   const handleBookmarkGame = () => {
     if (!isLoggedIn) {
       useDisclosureReturn.onOpen();
     }
+  };
+
+  const handleClickPublisher = () => {
+    navigate({
+      to: "/publishers/$id",
+      params: { id: gameDetail.publishers[0].id.toString() },
+    });
   };
 
   return (
@@ -41,10 +52,16 @@ const GameDetailCard = ({ gameDetail }: Props) => {
           </AspectRatio>
           <VStack alignItems={"start"}>
             <Heading fontSize={50}> {gameDetail.name}</Heading>
-            <Text fontSize={18} pb={2}>
-              {`${gameDetail.publishers[0].name}.`} {" Released: "}
-              {gameDetail.released}
-            </Text>
+            <HStack pb={2}>
+              <Text as={Link} onClick={handleClickPublisher} fontSize={18}>
+                {`${gameDetail.publishers[0].name}.`}
+              </Text>
+              <Text fontSize={18}>
+                {" Released: "}
+                {gameDetail.released}
+              </Text>
+            </HStack>
+
             <RatingBar gameDetail={gameDetail} />
             <Button colorScheme="teal" mt={2} onClick={handleBookmarkGame}>
               Bookmark this game{" "}

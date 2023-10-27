@@ -20,6 +20,8 @@ export interface GameSearchParams {
   genreId?: number;
   platformId?: number;
   ordering?: string;
+  publisherId?: number;
+  developerId?: number;
 }
 
 const useFetchGames = (gameSearchParams: GameSearchParams) => {
@@ -28,6 +30,8 @@ const useFetchGames = (gameSearchParams: GameSearchParams) => {
       genres: gameSearchParams.genreId,
       platforms: gameSearchParams.platformId,
       ordering: gameSearchParams.ordering,
+      publishers: gameSearchParams.publisherId,
+      developers: gameSearchParams.developerId,
     },
   });
 };
