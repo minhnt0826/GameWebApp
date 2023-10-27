@@ -2,18 +2,22 @@ import {
   Box,
   HStack,
   Heading,
+  Link,
   SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { GameDetail } from "../../hooks/api/useFetchGameDetail";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
   gameDetail: GameDetail;
 }
 
 const GameInfo = ({ gameDetail }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <VStack align={"start"}>
@@ -32,7 +36,19 @@ const GameInfo = ({ gameDetail }: Props) => {
             <Heading fontSize={25}> Developers </Heading>
             <Text>
               {gameDetail.developers.map((developer, id) => {
-                return id == 0 ? developer.name : ", " + developer.name;
+                return (
+                  <Text
+                    as={Link}
+                    onClick={() =>
+                      navigate({
+                        to: "/developers/$id",
+                        params: { id: developer.id.toString() },
+                      })
+                    }
+                  >
+                    {id == 0 ? developer.name : ", " + developer.name}
+                  </Text>
+                );
               })}
             </Text>
           </VStack>

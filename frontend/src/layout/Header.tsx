@@ -4,13 +4,13 @@ import React from "react";
 import { useAuthState } from "../contexts/Authentication";
 
 const Header = () => {
-  const { isLoggedIn } = useAuthState();
+  const { isLoggedIn, signout } = useAuthState();
 
   return (
     <HStack justifyContent={"end"} pr={10} pt={10}>
       {isLoggedIn ? (
         <HStack>
-          <Button>SIGN OUT</Button>
+          <Button onClick={signout}>SIGN OUT</Button>
         </HStack>
       ) : (
         <HStack>
