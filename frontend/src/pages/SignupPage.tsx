@@ -13,9 +13,13 @@ import {
   Text,
   Spacer,
   HStack,
+  Alert,
+  AlertIcon,
+  Spinner,
 } from "@chakra-ui/react";
 import Header from "../layout/Header";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useAuthState } from "../contexts/Authentication";
 
 type SignUpInfo = {
   username: string;
@@ -29,9 +33,33 @@ const SignupPage = () => {
     password: "",
   });
 
-  const handleSubmit = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [showSucessfulAlert, setShowSuccesfulAlert] = useState(false);
+
+  const { register } = useAuthState();
+
+  const navigate = useNavigate();
+  const handleSubmit = async () => {
     // Handle login logic here
-    console.log(signupInfo);
+    if (
+      signupInfo.username.trim() != "" &&
+      signupInfo.password.trim() != "" &&
+      signupInfo.email.trim() != ""
+    ) {
+      await register.mutate(signupInfo, {
+        onSuccess: () => {
+          setShowSuccesfulAlert(true);
+          const timeout = setTimeout(() => {
+            navigate({
+              to: "/games",
+            });
+          }, 2000);
+        },
+        onError: () => {
+          setShowAlert(true);
+        },
+      });
+    }
   };
 
   return (
@@ -60,15 +88,32 @@ const SignupPage = () => {
           {/* <Box p={8} width={"500px"}> */}
           <VStack width={"500px"} spacing={4} alignItems={"start"}>
             <Heading fontSize={50}> Sign up </Heading>
+            {showAlert ? (
+              <Alert status="error">
+                <AlertIcon />
+                Unable to sign up. Please try again with new information.
+              </Alert>
+            ) : null}
+
+            {showSucessfulAlert ? (
+              <VStack>
+                <Alert status="success">
+                  <AlertIcon />
+                  Signed up successfully! Please wait while we redirect you.
+                </Alert>
+                <Spinner> </Spinner>{" "}
+              </VStack>
+            ) : null}
             <FormControl>
               <FormLabel fontSize={22}>Email</FormLabel>
               <Input
                 height={"50px"}
                 type="text"
                 value={signupInfo.email}
-                onChange={(e) =>
-                  setSignupInfo({ ...signupInfo, email: e.target.value })
-                }
+                onChange={(e) => {
+                  setShowAlert(false);
+                  setSignupInfo({ ...signupInfo, email: e.target.value });
+                }}
               />
             </FormControl>
             <FormControl>
@@ -77,9 +122,10 @@ const SignupPage = () => {
                 height={"50px"}
                 type="text"
                 value={signupInfo.username}
-                onChange={(e) =>
-                  setSignupInfo({ ...signupInfo, username: e.target.value })
-                }
+                onChange={(e) => {
+                  setShowAlert(false);
+                  setSignupInfo({ ...signupInfo, username: e.target.value });
+                }}
               />
             </FormControl>
             <FormControl>
@@ -88,9 +134,10 @@ const SignupPage = () => {
                 height={"50px"}
                 type="password"
                 value={signupInfo.password}
-                onChange={(e) =>
-                  setSignupInfo({ ...signupInfo, password: e.target.value })
-                }
+                onChange={(e) => {
+                  setShowAlert(false);
+                  setSignupInfo({ ...signupInfo, password: e.target.value });
+                }}
               />
             </FormControl>
             <Button

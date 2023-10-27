@@ -13,15 +13,19 @@ import {
   Text,
   Spacer,
   HStack,
+  Alert,
+  AlertIcon,
+  Spinner,
 } from "@chakra-ui/react";
 import Header from "../layout/Header";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuthState } from "../contexts/Authentication";
+import { delay } from "framer-motion";
 
-type LoginInfo = {
+export interface LoginInfo {
   username: string;
   password: string;
-};
+}
 
 const LoginPage = () => {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -29,18 +33,28 @@ const LoginPage = () => {
     password: "",
   });
 
-  const { isLoggedIn, userId, login } = useAuthState();
+  const [showAlert, setShowAlert] = useState(false);
+  const [showSucessfulAlert, setShowSuccesfulAlert] = useState(false);
+
+  const { login } = useAuthState();
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    // Handle login logic here
-    console.log(loginInfo);
-    await login.mutateAsync();
-
-    navigate({
-      to: "/games",
-    });
+    if (loginInfo.username.trim() != "" && loginInfo.password.trim() != "")
+      await login.mutate(loginInfo, {
+        onSuccess: () => {
+          setShowSuccesfulAlert(true);
+          const timeout = setTimeout(() => {
+            navigate({
+              to: "/games",
+            });
+          }, 2000);
+        },
+        onError: () => {
+          setShowAlert(true);
+        },
+      });
   };
 
   return (
@@ -69,15 +83,33 @@ const LoginPage = () => {
           {/* <Box p={8} width={"500px"}> */}
           <VStack width={"500px"} spacing={4} alignItems={"start"}>
             <Heading fontSize={50}> Log in </Heading>
+            {showAlert ? (
+              <Alert status="error">
+                <AlertIcon />
+                Wrong login details
+              </Alert>
+            ) : null}
+
+            {showSucessfulAlert ? (
+              <VStack>
+                <Alert status="success">
+                  <AlertIcon />
+                  Logged in successfully! Please wait while we redirect you.
+                </Alert>
+                <Spinner> </Spinner>{" "}
+              </VStack>
+            ) : null}
+
             <FormControl>
               <FormLabel fontSize={22}>Username</FormLabel>
               <Input
                 height={"50px"}
                 type="text"
                 value={loginInfo.username}
-                onChange={(e) =>
-                  setLoginInfo({ ...loginInfo, username: e.target.value })
-                }
+                onChange={(e) => {
+                  setShowAlert(false);
+                  setLoginInfo({ ...loginInfo, username: e.target.value });
+                }}
               />
             </FormControl>
             <FormControl>
@@ -86,9 +118,10 @@ const LoginPage = () => {
                 height={"50px"}
                 type="password"
                 value={loginInfo.password}
-                onChange={(e) =>
-                  setLoginInfo({ ...loginInfo, password: e.target.value })
-                }
+                onChange={(e) => {
+                  setShowAlert(false);
+                  setLoginInfo({ ...loginInfo, password: e.target.value });
+                }}
               />
             </FormControl>
             <Button

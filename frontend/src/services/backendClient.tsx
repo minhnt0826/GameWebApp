@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const backendClient = axios.create({
-  baseURL: "https://localhost:8000/api",
+  baseURL: "http://localhost:8080/api",
 });
 
 export default backendClient;
