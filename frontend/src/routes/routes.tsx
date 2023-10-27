@@ -1,4 +1,4 @@
-import { RootRoute, Route, Router } from "@tanstack/react-router";
+import { Navigate, RootRoute, Route, Router } from "@tanstack/react-router";
 import LoginPage from "../pages/LoginPage";
 import Home from "../pages/Home";
 import SignupPage from "../pages/SignupPage";
@@ -9,7 +9,7 @@ const rootRoute = new RootRoute();
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Home,
+  component: () => <Navigate to="/games" />,
 });
 const loginRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -23,6 +23,12 @@ const signupRoute = new Route({
   component: SignupPage,
 });
 
+export const gamesRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/games",
+  component: Home,
+});
+
 const singleGameRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/games/$id",
@@ -33,6 +39,7 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   signupRoute,
+  gamesRoute,
   singleGameRoute,
 ]);
 

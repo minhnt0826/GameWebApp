@@ -8,12 +8,15 @@ const useFetchData = <T,>(
   axiosRequestConfig?: AxiosRequestConfig
 ) => {
   const { data, error, isLoading } = useQuery<T>({
-    queryKey: [endpoint],
+    queryKey: [endpoint, axiosRequestConfig],
     queryFn: () =>
       apiClient.get<T>(endpoint, axiosRequestConfig).then((res) => res.data),
     select: (data) => data,
     cacheTime: 18000,
+    staleTime: 18000,
   });
+
+  // console.log(axiosRequestConfig);
 
   return { data, error, isLoading };
 };

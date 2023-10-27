@@ -20,9 +20,11 @@ import {
 import SideBar from "../layout/SideBar";
 import Header from "../layout/Header";
 import GameDetailCard from "../components/SingleGame/GameDetailCard";
-import GameList from "../components/GameList";
+import GameList from "../components/Home/GameGrid";
 import GameDescription from "../components/SingleGame/GameDescription";
 import GameInfo from "../components/SingleGame/GameInfo";
+import ReviewsTab from "../components/SingleGame/ReviewsTab";
+import ScreenshotsTab from "../components/SingleGame/ScreenshotsTab";
 
 const SingleGamePage = () => {
   const { id } = useParams();
@@ -55,6 +57,7 @@ const SingleGamePage = () => {
               <Tabs size="md" variant="line">
                 <TabList>
                   <Tab>Overview</Tab>
+
                   <Tab>Reviews</Tab>
                 </TabList>
                 <TabPanels>
@@ -65,7 +68,7 @@ const SingleGamePage = () => {
                     </VStack>
                   </TabPanel>
                   <TabPanel>
-                    <p>two!</p>
+                    <ReviewsTab gameId={data.id} />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

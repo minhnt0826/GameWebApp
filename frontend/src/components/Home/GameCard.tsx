@@ -14,7 +14,7 @@ import {
   VStack,
   Link,
 } from "@chakra-ui/react";
-import { Game } from "../hooks/api/useFetchGames";
+import { Game } from "../../hooks/api/useFetchGames";
 import { useNavigate } from "@tanstack/react-router";
 // import { Link } from "@tanstack/react-router";
 
@@ -29,7 +29,7 @@ const GameCard = ({ game }: GameProps) => {
       <Image src={game.background_image} borderRadius={10} />
 
       <CardBody p={3}>
-        <HStack justifyContent="space-between">
+        <HStack justifyContent="space-between" alignItems={"start"}>
           <Heading
             as={Link}
             onClick={() =>
@@ -45,7 +45,7 @@ const GameCard = ({ game }: GameProps) => {
           </Heading>
 
           <Text fontSize={25} fontWeight={"bold"}>
-            {game.released.slice(0, 4)}{" "}
+            {game.released?.slice(0, 4)}{" "}
           </Text>
         </HStack>
 
