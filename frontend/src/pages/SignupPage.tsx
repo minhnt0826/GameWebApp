@@ -12,6 +12,7 @@ import {
   Heading,
   Text,
   Spacer,
+  HStack,
 } from "@chakra-ui/react";
 import Header from "../layout/Header";
 import { Link } from "@tanstack/react-router";
@@ -40,7 +41,19 @@ const SignupPage = () => {
       p={10}
     >
       <GridItem area={"header"}>
-        <Header />
+        <HStack justifyContent={"space-between"}>
+          <Text fontSize={35} fontWeight={"bold"} as={Link} to="/">
+            GAME WOLRD
+          </Text>
+          <HStack>
+            <Button as={Link} to="/login">
+              LOG IN
+            </Button>
+            <Button as={Link} to="/signup">
+              SIGN UP
+            </Button>
+          </HStack>{" "}
+        </HStack>
       </GridItem>
       <GridItem area={"main"}>
         <Flex height="80vh" alignItems="center" justifyContent="center">

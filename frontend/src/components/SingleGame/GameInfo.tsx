@@ -18,7 +18,7 @@ const GameInfo = ({ gameDetail }: Props) => {
     <>
       <VStack align={"start"}>
         <Heading fontSize={35}> Game Info </Heading>
-        <SimpleGrid columns={2} spacingY={5}>
+        <SimpleGrid columns={2} spacing={5}>
           <VStack align={"start"}>
             <Heading fontSize={25}> Genres </Heading>
             <Text>

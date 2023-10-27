@@ -12,9 +12,11 @@ import {
   Heading,
   Text,
   Spacer,
+  HStack,
 } from "@chakra-ui/react";
 import Header from "../layout/Header";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useAuthState } from "../contexts/Authentication";
 
 type LoginInfo = {
   username: string;
@@ -27,9 +29,18 @@ const LoginPage = () => {
     password: "",
   });
 
-  const handleSubmit = () => {
+  const { isLoggedIn, userId, login } = useAuthState();
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
     // Handle login logic here
     console.log(loginInfo);
+    await login.mutateAsync();
+
+    navigate({
+      to: "/games",
+    });
   };
 
   return (
@@ -39,7 +50,19 @@ const LoginPage = () => {
       p={10}
     >
       <GridItem area={"header"}>
-        <Header />
+        <HStack justifyContent={"space-between"}>
+          <Text fontSize={35} fontWeight={"bold"} as={Link} to="/">
+            GAME WOLRD
+          </Text>
+          <HStack>
+            <Button as={Link} to="/login">
+              LOG IN
+            </Button>
+            <Button as={Link} to="/signup">
+              SIGN UP
+            </Button>
+          </HStack>{" "}
+        </HStack>
       </GridItem>
       <GridItem area={"main"}>
         <Flex height="80vh" alignItems="center" justifyContent="center">

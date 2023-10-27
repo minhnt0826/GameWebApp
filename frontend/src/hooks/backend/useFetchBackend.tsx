@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import apiClient from "../../services/apiClient";
+import backendClient from "../../services/backendClient";
 import { AxiosRequestConfig } from "axios";
 
-const useFetchData = <T,>(
+const useFetchBackend = <T,>(
   endpoint: string,
   axiosRequestConfig?: AxiosRequestConfig
 ) => {
   const { data, error, isLoading } = useQuery<T>({
     queryKey: [endpoint, axiosRequestConfig],
     queryFn: () =>
-      apiClient.get<T>(endpoint, axiosRequestConfig).then((res) => res.data),
+      backendClient
+        .get<T>(endpoint, axiosRequestConfig)
+        .then((res) => res.data),
     select: (data) => data,
     cacheTime: 18000,
     staleTime: 18000,
@@ -21,4 +23,4 @@ const useFetchData = <T,>(
   return { data, error, isLoading };
 };
 
-export default useFetchData;
+export default useFetchBackend;
