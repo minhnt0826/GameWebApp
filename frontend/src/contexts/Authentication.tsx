@@ -5,6 +5,7 @@ interface AuthState {
   isLoggedIn: boolean;
   userId: number | null;
   login: UseMutationResult<void, unknown, void, unknown>;
+  register: UseMutationResult<void, unknown, void, unknown>;
 }
 const AuthStateContext = React.createContext<AuthState>({} as AuthState);
 
@@ -23,12 +24,20 @@ export default function AuthStateContextProvider({ children }: Props) {
     },
   });
 
+  const registerMutation = useMutation({
+    mutationFn: async () => {
+      setisLoggedIn(true);
+      setUserId(2);
+    },
+  });
+
   return (
     <AuthStateContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
         userId: userId,
         login: loginMutation,
+        register: registerMutation,
       }}
     >
       {children}

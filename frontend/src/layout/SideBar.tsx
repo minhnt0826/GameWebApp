@@ -4,6 +4,9 @@ import {
   Text,
   Divider,
   Link as ChakraLink,
+  HStack,
+  Image,
+  Spacer,
 } from "@chakra-ui/react";
 import React from "react";
 import useFetchGenres from "../hooks/api/useFetchGenres";
@@ -12,9 +15,14 @@ import {
   useNavigate,
   useSearch,
 } from "@tanstack/react-router";
+import useFetchBookmarks from "../hooks/backend/useFetchBookmarks";
+import { useAuthState } from "../contexts/Authentication";
+import BookmarkList from "../components/Sidebar/BookmarkList";
 
 const SideBar = () => {
   const { data, error, isLoading } = useFetchGenres();
+
+  const { isLoggedIn, userId } = useAuthState();
 
   const navigate = useNavigate();
 
@@ -30,20 +38,29 @@ const SideBar = () => {
       <Heading fontSize={25}> Genres</Heading>
 
       {data?.results.map((genre) => (
-        <Text
-          as={ChakraLink}
-          onClick={() => {
-            navigate({
-              to: "/games",
-              search: (prev) => ({ genres: genre.id }),
-            });
-          }}
-          fontSize={genres && genres == genre.id ? 22 : 18}
-          fontWeight={genres && genres == genre.id ? "bold" : "normal"}
-        >
-          {genre.name}
-        </Text>
+        <HStack>
+          <Image
+            boxSize={"32px"}
+            borderRadius={"6px"}
+            src={genre.image_background}
+          ></Image>
+          <Text
+            as={ChakraLink}
+            onClick={() => {
+              navigate({
+                to: "/games",
+                search: (prev) => ({ genres: genre.id }),
+              });
+            }}
+            fontSize={genres && genres == genre.id ? 22 : 18}
+            fontWeight={genres && genres == genre.id ? "bold" : "normal"}
+          >
+            {genre.name}
+          </Text>
+        </HStack>
       ))}
+      <Spacer></Spacer>
+      {isLoggedIn && userId ? <BookmarkList userId={userId} /> : null}
     </VStack>
   );
 };
