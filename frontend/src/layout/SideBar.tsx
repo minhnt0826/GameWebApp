@@ -36,18 +36,21 @@ const SideBar = () => {
         GAME WOLRD
       </Text>
       <Divider my={2}></Divider>
-      {isLoggedIn && userId ? <BookmarkList userId={userId} /> : null}
+      {isLoggedIn && userId ? (
+        <>
+          <BookmarkList userId={userId} />
+          <Heading
+            as={Link}
+            onClick={() => navigate({ to: "/guides" })}
+            fontSize={25}
+          >
+            Manage your guides
+          </Heading>
+          <Divider my={2}></Divider>
 
-      <Heading
-        as={Link}
-        onClick={() => navigate({ to: "/guides" })}
-        fontSize={25}
-      >
-        Manage your guides
-      </Heading>
-      <Divider my={2}></Divider>
-
-      <Heading fontSize={25}> Genres</Heading>
+          <Heading fontSize={25}> Genres</Heading>
+        </>
+      ) : null}
 
       {data?.results.map((genre) => (
         <HStack>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "../contexts/Authentication";
 import {
   Grid,
@@ -50,6 +50,26 @@ const UserProfilePage = () => {
           password: "",
         }
   );
+
+  useEffect(() => {
+    setProfile(
+      data
+        ? {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            username: data.username,
+            password: data.password,
+          }
+        : {
+            firstName: "",
+            lastName: "",
+            email: "",
+            username: "",
+            password: "",
+          }
+    );
+  }, [data]);
 
   const userProfileMutation = useMutateUserProfile(userId);
 
