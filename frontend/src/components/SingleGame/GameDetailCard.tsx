@@ -78,11 +78,22 @@ const GameDetailCard = ({ gameDetail }: Props) => {
             </HStack>
 
             <RatingBar gameDetail={gameDetail} />
-            <HStack>
-              <Button colorScheme="teal" mt={2} onClick={handleBookmarkGame}>
+            <HStack mt={2}>
+              <Button colorScheme="teal" onClick={handleBookmarkGame}>
                 Bookmark this game{" "}
               </Button>
               {bookmarkMutation.isLoading ? <Spinner> </Spinner> : null}
+              <Button
+                colorScheme="facebook"
+                onClick={() =>
+                  navigate({
+                    to: "/games/$id/new-guide",
+                    params: { id: gameDetail.id.toString() },
+                  })
+                }
+              >
+                Write a new game guide
+              </Button>
             </HStack>
 
             <NotLoggedInDialog

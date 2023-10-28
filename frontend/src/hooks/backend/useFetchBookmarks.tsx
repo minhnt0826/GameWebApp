@@ -25,7 +25,6 @@ const useFetchBookmarks = (userId: number) => {
     staleTime: 18000,
   });
 
-  //   return useFetchBackend<number[]>(`/users/${id}/bookmarks`);
   return { data, error, isLoading, isRefetching };
 };
 

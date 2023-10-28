@@ -12,6 +12,16 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { GameSearchParams } from "../../hooks/api/useFetchGames";
 
+const validPlatforms = [
+  "PC",
+  "Xbox",
+  "iOS",
+  "Android",
+  "Apple Macintosh",
+  "Linux",
+  "Nintendo",
+];
+
 interface Props {
   gameSearchParams: GameSearchParams;
 }
@@ -32,18 +42,20 @@ const PlatformFilterMenu = () => {
             : "Platforms"}
         </MenuButton>
         <MenuList>
-          {data?.results.map((platform) => (
-            <MenuItem
-              onClick={() => {
-                navigate({
-                  to: "/games",
-                  search: (prev) => ({ ...prev, platforms: platform.id }),
-                });
-              }}
-            >
-              {platform.name}
-            </MenuItem>
-          ))}
+          {data?.results.map((platform) =>
+            validPlatforms.includes(platform.name) ? (
+              <MenuItem
+                onClick={() => {
+                  navigate({
+                    to: "/games",
+                    search: (prev) => ({ ...prev, platforms: platform.id }),
+                  });
+                }}
+              >
+                {platform.name}
+              </MenuItem>
+            ) : null
+          )}
         </MenuList>
       </Menu>
     </>

@@ -2,7 +2,7 @@ package com.elec5619.backend.guide;
 
 public class GuideRequest {
     private Long userId;
-    private Long gameId;
+    private Long rawgId;
     private String title;
     private String text;
 
@@ -14,12 +14,12 @@ public class GuideRequest {
         this.userId = userId;
     }
 
-    public Long getGameId() {
-        return gameId;
+    public Long getRawgId() {
+        return rawgId;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setRawgId(Long rawgId) {
+        this.rawgId = rawgId;
     }
 
     public String getTitle() {

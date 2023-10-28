@@ -22,7 +22,7 @@ interface Props {
   gameId: number;
 }
 
-const NewReviewCard = ({ gameId }: Props) => {
+const NewGuide = ({ gameId }: Props) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [rating, setRating] = useState(0);
 
@@ -98,4 +98,4 @@ const NewReviewCard = ({ gameId }: Props) => {
   );
 };
 
-export default NewReviewCard;
+export default NewGuide;

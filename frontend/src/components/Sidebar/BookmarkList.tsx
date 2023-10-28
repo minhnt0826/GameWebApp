@@ -37,7 +37,7 @@ const BookmarkList = ({ userId }: Props) => {
   return (
     <>
       <VStack alignItems={"start"}>
-        <Heading fontSize={25}> Your Bookmarks </Heading>
+        <Heading fontSize={25}> Your bookmarks </Heading>
         {bookmarks ? (
           bookmarks.map((bookmark) => (
             <HStack justify={"space-between"} minWidth={"16vw"}>

@@ -6,6 +6,8 @@ import SingleGamePage from "../pages/SingleGamePage";
 import SinglePublisherPage from "../pages/SinglePublisherPage";
 import SingleDeveloperPage from "../pages/SingleDeveloperPage";
 import UserProfilePage from "../pages/UserProfilePage";
+import ManageGuidesPage from "../pages/ManageGuidesPage";
+import NewGuidePage from "../pages/NewGuidePage";
 
 const rootRoute = new RootRoute();
 
@@ -56,6 +58,18 @@ const userProfileRoute = new Route({
   component: UserProfilePage,
 });
 
+const manageGuidesPage = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/guides",
+  component: ManageGuidesPage,
+});
+
+const newGuidePage = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/games/$id/new-guide",
+  component: NewGuidePage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -65,6 +79,8 @@ const routeTree = rootRoute.addChildren([
   singlePublisherRoute,
   singleDeveloperRoute,
   userProfileRoute,
+  manageGuidesPage,
+  newGuidePage,
 ]);
 
 declare module "@tanstack/react-router" {

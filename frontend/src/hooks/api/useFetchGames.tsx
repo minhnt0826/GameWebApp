@@ -47,8 +47,8 @@ const useFetchGames = (gameSearchParams: GameSearchParams) => {
         })
         .then((res) => res.data),
     select: (data) => data,
-    cacheTime: 18000,
-    staleTime: 18000,
+    // cacheTime: 18000,
+    // staleTime: 18000,
   });
 
   return { data, error, isLoading };

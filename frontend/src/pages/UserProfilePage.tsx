@@ -86,7 +86,7 @@ const UserProfilePage = () => {
         >
           <SideBar />
         </GridItem>
-        <GridItem area={"main"} p={10} width={"78vw"} minHeight={"100vh"}>
+        <GridItem area={"main"} pl={10} width={"78vw"} minHeight={"100vh"}>
           <Box>
             <Heading alignSelf={"start"} fontSize={45} mb={5}>
               {" "}

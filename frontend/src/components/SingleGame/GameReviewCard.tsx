@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { GameReview } from "../../hooks/backend/useFetchGameReviews";
+
 interface Props {
   gameReview: GameReview;
 }

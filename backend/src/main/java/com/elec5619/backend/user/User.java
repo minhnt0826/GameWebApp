@@ -1,6 +1,7 @@
 package com.elec5619.backend.user;
 
 import com.elec5619.backend.game.Game;
+import com.elec5619.backend.guide.Guide;
 import com.elec5619.backend.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,6 +34,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Guide> guides = new HashSet<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -97,5 +102,13 @@ public class User {
             this.bookmarkedGames.remove(game);
             game.getBookmarks().remove(this);
         }
+    }
+
+    public Set<Guide> getGuides() {
+        return guides;
+    }
+
+    public void setGuides(Set<Guide> guides) {
+        this.guides = guides;
     }
 }

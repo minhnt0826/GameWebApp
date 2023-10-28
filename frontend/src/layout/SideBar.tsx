@@ -7,6 +7,7 @@ import {
   HStack,
   Image,
   Spacer,
+  Link,
 } from "@chakra-ui/react";
 import React from "react";
 import useFetchGenres from "../hooks/api/useFetchGenres";
@@ -35,6 +36,17 @@ const SideBar = () => {
         GAME WOLRD
       </Text>
       <Divider my={2}></Divider>
+      {isLoggedIn && userId ? <BookmarkList userId={userId} /> : null}
+
+      <Heading
+        as={Link}
+        onClick={() => navigate({ to: "/guides" })}
+        fontSize={25}
+      >
+        Manage your guides
+      </Heading>
+      <Divider my={2}></Divider>
+
       <Heading fontSize={25}> Genres</Heading>
 
       {data?.results.map((genre) => (
@@ -60,7 +72,6 @@ const SideBar = () => {
         </HStack>
       ))}
       <Spacer></Spacer>
-      {isLoggedIn && userId ? <BookmarkList userId={userId} /> : null}
     </VStack>
   );
 };

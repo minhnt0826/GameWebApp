@@ -1,5 +1,6 @@
 package com.elec5619.backend.game;
 
+import com.elec5619.backend.guide.Guide;
 import com.elec5619.backend.review.Review;
 import com.elec5619.backend.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +28,10 @@ public class Game {
     @OneToMany(mappedBy = "game")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "game")
+    @JsonIgnore
+    private Set<Guide> guides = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -66,6 +71,14 @@ public class Game {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Guide> getGuides() {
+        return guides;
+    }
+
+    public void setGuides(Set<Guide> guides) {
+        this.guides = guides;
     }
 }
 

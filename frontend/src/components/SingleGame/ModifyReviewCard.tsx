@@ -64,7 +64,9 @@ const ModifyReviewCard = ({ gameId, gameReview }: Props) => {
   return (
     <>
       <VStack>
-        <Heading alignSelf={"start"}> Modify your review </Heading>
+        <Heading mb={2} alignSelf={"start"}>
+          Modify your review
+        </Heading>
         <Textarea
           placeholder="Type your review..."
           value={inputValue}

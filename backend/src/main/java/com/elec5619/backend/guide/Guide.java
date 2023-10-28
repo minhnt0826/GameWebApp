@@ -15,11 +15,12 @@ public class Guide {
     private Long id;
 
     private String title = new String("");
-    private String text = new String("");
+
+    @Column(length = 10000)
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
-    @JsonIgnore
     private Game game;
 
     @ManyToOne
