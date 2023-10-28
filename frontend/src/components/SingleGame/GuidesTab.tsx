@@ -103,9 +103,7 @@ const GuidesTab = ({ gameId }: Props) => {
         </VStack>
       ) : gameGuides ? (
         <>
-          <Button colorScheme={"telegram"}> Manage your game guides </Button>
-
-          <Heading my={5}> Game guides</Heading>
+          <Heading mb={5}> Game guides</Heading>
           {gameGuides.length <= 0 ? (
             <Text> No game guides written for this game yet.</Text>
           ) : (
