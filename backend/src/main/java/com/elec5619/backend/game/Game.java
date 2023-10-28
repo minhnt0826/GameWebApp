@@ -25,6 +25,7 @@ public class Game {
     private Set<User> bookmarks = new HashSet<>();
 
     @OneToMany(mappedBy = "game")
+    @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
 
     public Long getId() {
@@ -57,6 +58,14 @@ public class Game {
 
     public void setBookmarks(Set<User> bookmarks) {
         this.bookmarks = bookmarks;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }
 

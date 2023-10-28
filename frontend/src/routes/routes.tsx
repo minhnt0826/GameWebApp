@@ -5,6 +5,7 @@ import SignupPage from "../pages/SignupPage";
 import SingleGamePage from "../pages/SingleGamePage";
 import SinglePublisherPage from "../pages/SinglePublisherPage";
 import SingleDeveloperPage from "../pages/SingleDeveloperPage";
+import UserProfilePage from "../pages/UserProfilePage";
 
 const rootRoute = new RootRoute();
 
@@ -49,6 +50,12 @@ const singleDeveloperRoute = new Route({
   component: SingleDeveloperPage,
 });
 
+const userProfileRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/profile",
+  component: UserProfilePage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -57,6 +64,7 @@ const routeTree = rootRoute.addChildren([
   singleGameRoute,
   singlePublisherRoute,
   singleDeveloperRoute,
+  userProfileRoute,
 ]);
 
 declare module "@tanstack/react-router" {

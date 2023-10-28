@@ -7,29 +7,34 @@ import {
   Box,
   IconButton,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
 import React, { useState } from "react";
 import { useAuthState } from "../../contexts/Authentication";
 import NotLoggedInDialog from "../NotLoggedInDialog";
-import useMutateGameReviews from "../../hooks/backend/useMutateGameReviews";
+import useMutateGameReviews, {
+  useUpdateGameReviews,
+} from "../../hooks/backend/useMutateGameReviews";
 import { GameDetail } from "../../hooks/api/useFetchGameDetail";
 import { useQueryClient } from "@tanstack/react-query";
+import { GameReview } from "../../hooks/backend/useFetchGameReviews";
 
 interface Props {
   gameId: number;
+  gameReview: GameReview;
 }
 
-const NewReviewCard = ({ gameId }: Props) => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [rating, setRating] = useState(0);
+const ModifyReviewCard = ({ gameId, gameReview }: Props) => {
+  const [inputValue, setInputValue] = useState<string>(gameReview.text);
+  const [rating, setRating] = useState(gameReview.rating);
 
   const { userId, isLoggedIn } = useAuthState();
 
   const useDisclosureReturn = useDisclosure();
 
-  const gameReviewMutation = useMutateGameReviews();
+  const gameReviewMutation = useUpdateGameReviews();
 
   const queryClient = useQueryClient();
 
@@ -40,6 +45,7 @@ const NewReviewCard = ({ gameId }: Props) => {
       if (inputValue.trim() !== "" && rating > 0) {
         gameReviewMutation.mutate(
           {
+            id: gameReview.id,
             rawgId: gameId,
             userId: userId,
             text: inputValue,
@@ -58,7 +64,7 @@ const NewReviewCard = ({ gameId }: Props) => {
   return (
     <>
       <VStack>
-        <Heading alignSelf={"start"}> Write your own review! </Heading>
+        <Heading alignSelf={"start"}> Modify your review </Heading>
         <Textarea
           placeholder="Type your review..."
           value={inputValue}
@@ -84,6 +90,8 @@ const NewReviewCard = ({ gameId }: Props) => {
         <Button alignSelf={"end"} onClick={handlePostReview}>
           Post review
         </Button>
+        {gameReviewMutation.isLoading ? <Spinner> </Spinner> : null}
+
         <NotLoggedInDialog
           action={"write game reviews"}
           useDisclosureReturn={useDisclosureReturn}
@@ -93,4 +101,4 @@ const NewReviewCard = ({ gameId }: Props) => {
   );
 };
 
-export default NewReviewCard;
+export default ModifyReviewCard;

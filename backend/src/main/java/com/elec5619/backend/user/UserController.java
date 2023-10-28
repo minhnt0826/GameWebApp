@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,19 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserProfile(@PathVariable Long userId)
+    {
+        return new ResponseEntity<>(userService.getUserDetail(userId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable Long userId, @RequestBody User user)
+    {
+        return new ResponseEntity<>(userService.updateUserProfile(userId, user), HttpStatus.OK);
+    }
+
+
     @GetMapping("/{userId}/bookmarks")
     public ResponseEntity<List<Game>> getUserBookmarks(@PathVariable Long userId)
     {
@@ -51,6 +65,14 @@ public class UserController {
     public ResponseEntity<String> bookmarkGame(@PathVariable Long userId, @RequestBody BookmarkRequest request)
     {
         userService.addBookmark(userId, request.getRawgId(), request.getName());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}/bookmarks")
+    public ResponseEntity<String> deleteBookmark(@PathVariable Long userId, @RequestBody BookmarkRequest request)
+    {
+        userService.removeBookmark(userId, request.getRawgId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

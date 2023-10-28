@@ -2,7 +2,7 @@ package com.elec5619.backend.review;
 
 public class ReviewRequest {
     private Long userId;
-    private Long gameId;
+    private Long rawgId;
     private String text;
     private Long rating;
 
@@ -14,12 +14,12 @@ public class ReviewRequest {
         this.userId = userId;
     }
 
-    public Long getGameId() {
-        return gameId;
+    public Long getRawgId() {
+        return rawgId;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setRawgId(Long rawgId) {
+        this.rawgId = rawgId;
     }
 
     public String getText() {
@@ -29,7 +29,7 @@ public class ReviewRequest {
     public void setText(String text) {
         this.text = text;
     }
-    
+
 
     public Long getRating() {
         return rating;

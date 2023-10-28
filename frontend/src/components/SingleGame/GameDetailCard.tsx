@@ -10,6 +10,7 @@ import {
   Heading,
   Image,
   Link,
+  Spinner,
   Text,
   VStack,
   useDisclosure,
@@ -77,9 +78,13 @@ const GameDetailCard = ({ gameDetail }: Props) => {
             </HStack>
 
             <RatingBar gameDetail={gameDetail} />
-            <Button colorScheme="teal" mt={2} onClick={handleBookmarkGame}>
-              Bookmark this game{" "}
-            </Button>
+            <HStack>
+              <Button colorScheme="teal" mt={2} onClick={handleBookmarkGame}>
+                Bookmark this game{" "}
+              </Button>
+              {bookmarkMutation.isLoading ? <Spinner> </Spinner> : null}
+            </HStack>
+
             <NotLoggedInDialog
               action={"bookmark games"}
               useDisclosureReturn={useDisclosureReturn}

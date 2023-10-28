@@ -22,11 +22,22 @@ public class GameService {
     }
 
     public Game addGame(GameRequest gameRequest) {
-        Game game = new Game();
-        game.setName(gameRequest.getName());
-        game.setRawgId(gameRequest.getRawgId());
+        Game gameFind = gameRepository.findByRawgId(gameRequest.getRawgId());
 
-        return gameRepository.save(game);
+        if (gameFind == null)
+        {
+            Game game = new Game();
+
+            game.setName(gameRequest.getName());
+            game.setRawgId(gameRequest.getRawgId());
+
+            return gameRepository.save(game);
+        }
+        else
+        {
+            return gameFind;
+        }
+
     }
 
 }

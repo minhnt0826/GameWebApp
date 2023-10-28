@@ -3,24 +3,25 @@ import useFetchBackend from "./useFetchBackend";
 import { useQuery } from "@tanstack/react-query";
 import backendClient from "../../services/backendClient";
 
-export interface GameBookmark {
+export interface GameReview {
   id: number;
-  rawgId: number;
-  name: string;
+  text: string;
+  rating: number;
+  user: {
+    id: number;
+    username: string;
+  };
 }
 
-// const bookmarks: Bookmark[] = [
-//   { gameId: 3498, gameName: "Grand Theft Auto V" },
-//   { gameId: 3328, gameName: "The Witcher 3: Wild Hunt" },
-// ];
-
-const useFetchBookmarks = (userId: number) => {
+const useFetchGameReviews = (rawgId: number) => {
   const { data, error, isLoading, isRefetching } = useQuery({
-    queryKey: ["bookmarks"],
+    queryKey: ["gameReviews", rawgId],
     queryFn: () =>
       backendClient
-        .get<GameBookmark[]>(`/users/${userId}/bookmarks`)
-        .then((res) => res.data.sort((a, b) => a.id - b.id)),
+        .get<GameReview[]>(`/reviews`, {
+          params: { rawgId: rawgId },
+        })
+        .then((res) => res.data),
     cacheTime: 18000,
     staleTime: 18000,
   });
@@ -29,4 +30,4 @@ const useFetchBookmarks = (userId: number) => {
   return { data, error, isLoading, isRefetching };
 };
 
-export default useFetchBookmarks;
+export default useFetchGameReviews;

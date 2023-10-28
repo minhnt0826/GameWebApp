@@ -9,7 +9,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import { GameReview } from "../../hooks/api/useFetchGameReviews";
+import { GameReview } from "../../hooks/backend/useFetchGameReviews";
 interface Props {
   gameReview: GameReview;
 }
@@ -23,7 +23,7 @@ const GameReviewCard = ({ gameReview }: Props) => {
     >
       <CardHeader>
         <HStack justifyContent={"space-between"}>
-          <Heading> {gameReview.username}</Heading>
+          <Heading> {gameReview.user.username}</Heading>
           <Badge
             height={"30px"}
             width={"30px"}
@@ -41,7 +41,7 @@ const GameReviewCard = ({ gameReview }: Props) => {
           </Badge>
         </HStack>
       </CardHeader>
-      <CardBody> {gameReview.reviewText}</CardBody>
+      <CardBody> {gameReview.text}</CardBody>
     </Card>
   );
 };

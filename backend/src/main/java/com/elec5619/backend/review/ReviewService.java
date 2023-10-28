@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +26,13 @@ public class ReviewService {
     public Review addReview(ReviewRequest request){
         Review review = new Review();
 
-        Game game = gameRepository.findById(request.getGameId()).orElseThrow(() -> new EntityNotFoundException());
+        Game game = gameRepository.findByRawgId(request.getRawgId());
+
+        if (game == null)
+        {
+            throw new EntityNotFoundException();
+        }
+
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new EntityNotFoundException());
 
         review.setGame(game);
@@ -38,12 +45,43 @@ public class ReviewService {
         return review;
     }
 
-    public List<Review> getReviewsOfGame (Long gameId){
-        return reviewRepository.findAllByGameId(gameId);
+    public Review updateReview(Long reviewId, ReviewRequest updateRequest) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new EntityNotFoundException());
+
+        if (updateRequest.getRating() != null) {
+            review.setRating(updateRequest.getRating());
+        }
+
+        if (updateRequest.getText() != null) {
+            review.setText(updateRequest.getText());
+        }
+
+        reviewRepository.save(review);
+
+        return review;
     }
 
-    public void deleteReviewsOfGame (Long gameId){
-        List<Review> reviews = reviewRepository.findAllByGameId(gameId);
+    public List<Review> getReviewsOfGame (Long rawgId){
+        List<Review> reviews = new ArrayList<>();
+
+        Game game = gameRepository.findByRawgId(rawgId);
+        if (game != null)
+        {
+            reviews.addAll(game.getReviews());
+        }
+
+        return reviews;
+    }
+
+    public void deleteReviewsOfGame (Long rawgId){
+        Game game = gameRepository.findByRawgId(rawgId);
+
+        List<Review> reviews = new ArrayList<>();
+        if (game != null)
+        {
+            reviews.addAll(game.getReviews());
+        }
+
         reviewRepository.deleteAll(reviews);
     }
 
