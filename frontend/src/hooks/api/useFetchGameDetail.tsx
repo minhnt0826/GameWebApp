@@ -1,5 +1,8 @@
 import React from "react";
 import useFetchData from "./useFetchData";
+import { useQuery } from "@tanstack/react-query";
+import apiClient from "../../services/apiClient";
+import useMutateGame from "../backend/useMutateGame";
 
 type Publisher = {
   id: number;
@@ -44,7 +47,25 @@ export type GameDetail = {
 };
 
 const useFetchGameDetail = (id: string) => {
-  return useFetchData<GameDetail>(`/games/${id}`);
+  const newGameMutation = useMutateGame();
+
+  const { data, error, isLoading } = useQuery<GameDetail>({
+    queryKey: ["gamesDetail", id],
+    queryFn: () =>
+      apiClient.get<GameDetail>(`/games/${id}`).then((res) => res.data),
+    select: (data) => data,
+
+    onSuccess: (data) => {
+      newGameMutation.mutate({
+        name: data.name,
+        rawgId: data.id,
+      });
+    },
+    cacheTime: 18000,
+    staleTime: 18000,
+  });
+
+  return { data, error, isLoading };
 };
 
 export default useFetchGameDetail;

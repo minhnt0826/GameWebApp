@@ -40,9 +40,9 @@ const RatingBar = ({ gameDetail }: Props) => {
           alignItems={"center"}
           fontSize={25}
           colorScheme={
-            gameDetail.rating > 7
+            gameDetail.rating > 3
               ? "green"
-              : gameDetail.rating > 5
+              : gameDetail.rating > 2
               ? "yellow"
               : "red"
           }

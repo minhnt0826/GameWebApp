@@ -16,8 +16,6 @@ const useFetchData = <T,>(
     staleTime: 18000,
   });
 
-  // console.log(axiosRequestConfig);
-
   return { data, error, isLoading };
 };
 

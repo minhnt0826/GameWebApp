@@ -7,6 +7,7 @@ import {
   Box,
   IconButton,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
@@ -84,6 +85,8 @@ const NewReviewCard = ({ gameId }: Props) => {
         <Button alignSelf={"end"} onClick={handlePostReview}>
           Post review
         </Button>
+        {gameReviewMutation.isLoading ? <Spinner> </Spinner> : null}
+
         <NotLoggedInDialog
           action={"write game reviews"}
           useDisclosureReturn={useDisclosureReturn}

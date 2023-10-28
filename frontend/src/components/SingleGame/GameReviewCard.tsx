@@ -28,9 +28,9 @@ const GameReviewCard = ({ gameReview }: Props) => {
             height={"30px"}
             width={"30px"}
             colorScheme={
-              gameReview.rating > 7
+              gameReview.rating > 3
                 ? "green"
-                : gameReview.rating > 4
+                : gameReview.rating > 2
                 ? "yellow"
                 : "red"
             }

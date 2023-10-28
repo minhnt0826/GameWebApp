@@ -88,7 +88,7 @@ const ModifyReviewCard = ({ gameId, gameReview }: Props) => {
           ))}
         </Box>
         <Button alignSelf={"end"} onClick={handlePostReview}>
-          Post review
+          Update review
         </Button>
         {gameReviewMutation.isLoading ? <Spinner> </Spinner> : null}
 
