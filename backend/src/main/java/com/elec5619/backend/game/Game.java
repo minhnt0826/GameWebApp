@@ -5,6 +5,7 @@ import com.elec5619.backend.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,16 +15,17 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private Long rawgId;
 
     private String name;
 
     @ManyToMany(mappedBy = "bookmarkedGames")
     @JsonIgnore
-    private Set<User> bookmarks;
+    private Set<User> bookmarks = new HashSet<>();
 
     @OneToMany(mappedBy = "game")
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();
 
     public Long getId() {
         return id;

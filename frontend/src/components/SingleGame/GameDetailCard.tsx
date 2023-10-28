@@ -18,20 +18,34 @@ import RatingBar from "./RatingBar";
 import { useAuthState } from "../../contexts/Authentication";
 import NotLoggedInDialog from "../NotLoggedInDialog";
 import { useNavigate } from "@tanstack/react-router";
+import useMutateBookmarks, {
+  BookmarkInfo,
+} from "../../hooks/backend/useMutateBookmarks";
 
 interface Props {
   gameDetail: GameDetail;
 }
 
 const GameDetailCard = ({ gameDetail }: Props) => {
-  const { isLoggedIn } = useAuthState();
+  const { userId, isLoggedIn } = useAuthState();
 
   const useDisclosureReturn = useDisclosure();
 
   const navigate = useNavigate();
 
+  const bookmarkMutation = useMutateBookmarks();
+
   const handleBookmarkGame = () => {
-    if (!isLoggedIn) {
+    if (isLoggedIn && userId) {
+      const bookmarkInfo: BookmarkInfo = {
+        userId: userId,
+        game: {
+          rawgId: gameDetail.id,
+          name: gameDetail.name,
+        },
+      };
+      bookmarkMutation.mutate(bookmarkInfo);
+    } else {
       useDisclosureReturn.onOpen();
     }
   };

@@ -50,9 +50,7 @@ public class UserController {
     @PostMapping("/{userId}/bookmarks")
     public ResponseEntity<String> bookmarkGame(@PathVariable Long userId, @RequestBody BookmarkRequest request)
     {
-        System.out.println(request.getGameId());
-
-        userService.addBookmark(userId, request.getGameId());
+        userService.addBookmark(userId, request.getRawgId(), request.getName());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

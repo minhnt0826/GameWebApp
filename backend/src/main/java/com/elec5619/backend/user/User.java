@@ -5,6 +5,7 @@ import com.elec5619.backend.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,11 +24,11 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "game_id")
     )
-    private Set<Game> bookmarkedGames;
+    private Set<Game> bookmarkedGames = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();
 
     public void setId(Long id) {
         this.id = id;

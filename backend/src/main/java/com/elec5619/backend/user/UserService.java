@@ -53,10 +53,25 @@ public class UserService {
         return games;
     }
 
-    public void addBookmark(Long userId, Long gameId) {
+    private Game addGame(Long rawgId, String name){
+        Game game = new Game();
+        game.setRawgId(rawgId);
+        game.setName(name);
+
+        gameRepository.save(game);
+
+        System.out.println("Adding new game");
+        return game;
+    }
+
+    public void addBookmark(Long userId, Long rawgId, String name) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException());
 
-        Game game = gameRepository.findById(gameId).orElseThrow(() -> new EntityNotFoundException());
+        Game game = gameRepository.findByRawgId(rawgId);
+
+        if (game == null ){
+            game = addGame(rawgId, name);
+        }
 
         user.addBookmark(game);
         userRepository.save(user);

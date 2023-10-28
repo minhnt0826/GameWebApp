@@ -22,11 +22,11 @@ const BookmarkList = ({ userId }: Props) => {
               onClick={() =>
                 navigate({
                   to: "/games/$id",
-                  params: { id: bookmark.gameId.toString() },
+                  params: { id: bookmark.rawgId.toString() },
                 })
               }
             >
-              {bookmark.gameName}
+              {bookmark.name}
             </Text>
           ))
         ) : (
