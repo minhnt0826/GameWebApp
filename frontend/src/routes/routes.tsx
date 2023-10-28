@@ -8,6 +8,7 @@ import SingleDeveloperPage from "../pages/SingleDeveloperPage";
 import UserProfilePage from "../pages/UserProfilePage";
 import ManageGuidesPage from "../pages/ManageGuidesPage";
 import NewGuidePage from "../pages/NewGuidePage";
+import SingleFeaturePage from "../pages/SingleFeaturePage";
 
 const rootRoute = new RootRoute();
 
@@ -52,6 +53,12 @@ const singleDeveloperRoute = new Route({
   component: SingleDeveloperPage,
 });
 
+const singleFeatureRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/features/$id",
+  component: SingleFeaturePage,
+});
+
 const userProfileRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/profile",
@@ -78,6 +85,7 @@ const routeTree = rootRoute.addChildren([
   singleGameRoute,
   singlePublisherRoute,
   singleDeveloperRoute,
+  singleFeatureRoute,
   userProfileRoute,
   manageGuidesPage,
   newGuidePage,

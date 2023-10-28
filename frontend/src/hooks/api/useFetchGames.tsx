@@ -25,6 +25,8 @@ export interface GameSearchParams {
   ordering?: string;
   publisherId?: number;
   developerId?: number;
+  tagId?: number;
+  page?: number;
 }
 
 const useFetchGames = (gameSearchParams: GameSearchParams) => {
@@ -34,6 +36,9 @@ const useFetchGames = (gameSearchParams: GameSearchParams) => {
     ordering: gameSearchParams.ordering,
     publishers: gameSearchParams.publisherId,
     developers: gameSearchParams.developerId,
+    tags: gameSearchParams.tagId,
+    page: gameSearchParams.page,
+    page_size: 18,
   };
 
   const { data, error, isLoading } = useQuery<GameList>({
@@ -47,8 +52,8 @@ const useFetchGames = (gameSearchParams: GameSearchParams) => {
         })
         .then((res) => res.data),
     select: (data) => data,
-    // cacheTime: 18000,
-    // staleTime: 18000,
+    cacheTime: 18000,
+    staleTime: 18000,
   });
 
   return { data, error, isLoading };

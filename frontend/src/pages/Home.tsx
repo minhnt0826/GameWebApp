@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Grid, GridItem, HStack, Spinner, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import SideBar from "../layout/SideBar";
 import Header from "../layout/Header";
 import PlatformFilterMenu from "../components/Home/PlatformFilterMenu";
@@ -19,13 +28,16 @@ const Home = () => {
     {} as GameSearchParams
   );
 
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     setGameSearchParams({
       genreId: genres,
       platformId: platforms,
       ordering: ordering,
+      page: page,
     });
-  }, [genres, platforms, ordering]);
+  }, [genres, platforms, ordering, page]);
 
   const { data, error, isLoading } = useFetchGames(gameSearchParams);
 
@@ -34,8 +46,6 @@ const Home = () => {
       <Grid
         templateAreas={`"sidebar header"
                         "sidebar main"`}
-        // pt={10}
-        // pr={10}
       >
         <GridItem area={"header"}>
           <Header />
@@ -57,6 +67,29 @@ const Home = () => {
                 <SortMenu></SortMenu>
               </HStack>
               <GameGrid gameList={data}></GameGrid>
+              <Box display="flex" justifyContent="center" mt={4}>
+                <HStack>
+                  <Button
+                    onClick={() => {
+                      setPage(page - 1);
+                    }}
+                    disabled={page === 1}
+                  >
+                    Prev
+                  </Button>
+                  <Text fontSize={20} mx={2}>
+                    Page: {page}
+                  </Text>
+                  <Button
+                    onClick={() => {
+                      setPage(page + 1);
+                    }}
+                    disabled={page === 5}
+                  >
+                    Next
+                  </Button>
+                </HStack>
+              </Box>
             </>
           ) : (
             <Spinner> </Spinner>

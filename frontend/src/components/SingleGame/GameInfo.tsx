@@ -68,7 +68,19 @@ const GameInfo = ({ gameDetail }: Props) => {
             <Heading fontSize={25}> Features </Heading>
             <Text>
               {gameDetail.tags.map((tag, id) => {
-                return id == 0 ? tag.name : ", " + tag.name;
+                return (
+                  <Text
+                    as={Link}
+                    onClick={() =>
+                      navigate({
+                        to: "/features/$id",
+                        params: { id: tag.id.toString() },
+                      })
+                    }
+                  >
+                    {id == 0 ? tag.name : ", " + tag.name}
+                  </Text>
+                );
               })}
             </Text>
           </VStack>
