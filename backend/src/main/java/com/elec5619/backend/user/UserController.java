@@ -1,5 +1,6 @@
 package com.elec5619.backend.user;
 
+import com.elec5619.backend.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,4 +40,22 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @GetMapping("/{userId}/bookmarks")
+    public ResponseEntity<List<Game>> getUserBookmarks(@PathVariable Long userId)
+    {
+        return new ResponseEntity<>(userService.getBookmarks(userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/bookmarks")
+    public ResponseEntity<String> bookmarkGame(@PathVariable Long userId, @RequestBody BookmarkRequest request)
+    {
+        System.out.println(request.getGameId());
+
+        userService.addBookmark(userId, request.getGameId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

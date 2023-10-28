@@ -1,6 +1,11 @@
 package com.elec5619.backend.user;
 
+import com.elec5619.backend.game.Game;
+import com.elec5619.backend.review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name="User", schema = "public")
@@ -11,6 +16,18 @@ public class User {
     private String email;
     private String username;
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+        name = "BookmarkGame",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
+    private Set<Game> bookmarkedGames;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Review> reviews;
 
     public void setId(Long id) {
         this.id = id;
@@ -44,5 +61,12 @@ public class User {
         this.password = password;
     }
 
+    public Set<Game> getBookmarkedGames() {
+        return bookmarkedGames;
+    }
 
+    public void addBookmark(Game game) {
+        this.bookmarkedGames.add(game);
+        game.getBookmarks().add(this);
+    }
 }

@@ -1,17 +1,24 @@
 package com.elec5619.backend.user;
 
+import com.elec5619.backend.game.Game;
+import com.elec5619.backend.game.GameRepository;
 import com.elec5619.backend.user.User;
 import com.elec5619.backend.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private GameRepository gameRepository;
 
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
@@ -31,4 +38,28 @@ public class UserService {
         }
         return null;
     }
+
+    public List<Game> getBookmarks(long userId)
+    {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException());
+
+        List<Game> games = new ArrayList<>();
+        games.addAll(user.getBookmarkedGames());
+
+        for (Game game: games) {
+            System.out.println(game.getName());
+        }
+
+        return games;
+    }
+
+    public void addBookmark(Long userId, Long gameId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException());
+
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new EntityNotFoundException());
+
+        user.addBookmark(game);
+        userRepository.save(user);
+    }
+
 }
