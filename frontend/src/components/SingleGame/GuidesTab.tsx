@@ -89,7 +89,7 @@ const GuidesTab = ({ gameId }: Props) => {
           <Heading my={2} fontSize={40}>
             {guideSelected.guide.title}
           </Heading>
-          {/* <Text dangerouslySetInnerHTML={{ __html: guideSelected.guide.text }} />; */}
+
           <Text>
             {guideSelected.guide.text.split("\n").map((item) => (
               <>

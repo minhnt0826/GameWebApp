@@ -35,7 +35,7 @@ public class GuideController {
     public ResponseEntity<Guide> addGuide(@RequestBody GuideRequest request){
         Guide review = guideService.addGuide(request);
 
-        return new ResponseEntity<>(review, HttpStatus.OK);
+        return new ResponseEntity<>(review, HttpStatus.CREATED);
     }
 
     @DeleteMapping

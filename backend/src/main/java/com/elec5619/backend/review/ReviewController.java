@@ -20,6 +20,7 @@ public class ReviewController {
     public ResponseEntity<List<Review>> getReviews (@RequestParam Long rawgId)
     {
         List<Review> reviews = reviewService.getReviewsOfGame(rawgId);
+
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
@@ -27,7 +28,7 @@ public class ReviewController {
     public ResponseEntity<Review> addReview(@RequestBody ReviewRequest request){
         Review review = reviewService.addReview(request);
 
-        return new ResponseEntity<>(review, HttpStatus.OK);
+        return new ResponseEntity<>(review, HttpStatus.CREATED);
     }
 
     @PutMapping("/{reviewId}")

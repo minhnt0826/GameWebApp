@@ -28,6 +28,6 @@ public class GameController {
     {
         Game game = gameService.addGame(request);
 
-        return new ResponseEntity<>(game, HttpStatus.OK);
+        return new ResponseEntity<>(game, HttpStatus.CREATED);
     }
 }

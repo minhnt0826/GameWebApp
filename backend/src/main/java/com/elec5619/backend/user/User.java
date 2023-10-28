@@ -111,4 +111,10 @@ public class User {
     public void setGuides(Set<Guide> guides) {
         this.guides = guides;
     }
+
+
+    @PreRemove
+    public void clearBookmarks(){
+        bookmarkedGames.clear();
+    }
 }

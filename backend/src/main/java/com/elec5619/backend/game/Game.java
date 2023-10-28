@@ -25,11 +25,11 @@ public class Game {
     @JsonIgnore
     private Set<User> bookmarks = new HashSet<>();
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Guide> guides = new HashSet<>();
 
@@ -79,6 +79,11 @@ public class Game {
 
     public void setGuides(Set<Guide> guides) {
         this.guides = guides;
+    }
+
+    @PreRemove
+    public void clearBookmarks(){
+        bookmarks.clear();
     }
 }
 

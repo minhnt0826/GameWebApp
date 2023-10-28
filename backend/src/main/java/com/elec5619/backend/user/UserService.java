@@ -29,6 +29,10 @@ public class UserService {
         return users;
     }
 
+    public void deleteAllUsers(){
+        userRepository.deleteAll();
+    }
+
     public User register(User user) {
         User userCheck = userRepository.findByUsername(user.getUsername());
 

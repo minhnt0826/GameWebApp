@@ -66,7 +66,7 @@ public class UserController {
     {
         userService.addBookmark(userId, request.getRawgId(), request.getName());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{userId}/bookmarks")
