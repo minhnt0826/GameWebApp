@@ -66,7 +66,7 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void testAddAndModifyReview() throws Exception {
+    public void testAddAndModifyBookmark() throws Exception {
         // create game
         Map<String, Object> payload = new HashMap<>();
         payload.put("name", "The Witcher 3");
