@@ -72,7 +72,7 @@ public class UserService {
         }
 
         if (updatedUser.getUsername() != null) {
-            user.setPassword(updatedUser.getUsername());
+            user.setUsername(updatedUser.getUsername());
         }
 
         if (updatedUser.getPassword() != null) {
