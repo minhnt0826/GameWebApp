@@ -6,6 +6,8 @@ import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./routes/routes.tsx";
 
 function App() {
+  localStorage.setItem("chakra-ui-color-mode", "dark");
+
   return (
     <>
       <RouterProvider router={router} />
